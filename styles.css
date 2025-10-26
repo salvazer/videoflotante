@@ -1,0 +1,424 @@
+/* Reset y configuración base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: transparent;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Reproductor flotante principal */
+.floating-player {
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    width: 400px;
+    height: 300px;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 9999;
+    transition: all 0.3s ease;
+    cursor: move;
+}
+
+.floating-player:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+}
+
+/* Contenedor de video */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#videoPlayer {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Controles superpuestos */
+.controls-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.7) 0%,
+        transparent 20%,
+        transparent 80%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 12px;
+}
+
+.floating-player:hover .controls-overlay {
+    opacity: 1;
+}
+
+/* Controles superiores */
+.top-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+/* Controles inferiores */
+.bottom-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+}
+
+/* Botones de control */
+.control-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(5px);
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+.play-pause {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+}
+
+/* Barra de progreso */
+.progress-container {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+    width: 0%;
+    transition: width 0.1s ease;
+    border-radius: 2px;
+}
+
+/* Display de tiempo */
+.time-display {
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    min-width: 80px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Handle para arrastrar */
+.drag-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    cursor: move;
+    z-index: 1;
+}
+
+/* Reproductor minimizado */
+.minimized-player {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 9999;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.minimized-player:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.8);
+}
+
+.restore-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estados del reproductor */
+.floating-player.minimized {
+    display: none;
+}
+
+.minimized-player.visible {
+    display: flex;
+}
+
+.floating-player.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    z-index: 10000;
+}
+
+.floating-player.fullscreen .video-container {
+    border-radius: 0;
+}
+
+.floating-player.fullscreen #videoPlayer {
+    border-radius: 0;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .floating-player {
+        width: 90vw;
+        height: 60vh;
+        max-width: 400px;
+        max-height: 300px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .controls-overlay {
+        opacity: 1; /* Siempre visible en móviles */
+    }
+    
+    .control-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+    
+    .play-pause {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+    
+    .time-display {
+        font-size: 14px;
+        min-width: 100px;
+    }
+}
+
+/* Estilos específicos para Android */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+    .floating-player {
+        width: 95vw;
+        height: 50vh;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .floating-player.fullscreen {
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+}
+
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .floating-player {
+        width: 60vw;
+        height: 80vh;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .floating-player.fullscreen {
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+}
+
+/* Mejoras para Android Chrome */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .floating-player {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+    }
+    
+    .controls-overlay {
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
+    }
+}
+
+/* Optimizaciones para dispositivos táctiles */
+@media (pointer: coarse) {
+    .control-btn {
+        min-width: 44px;
+        min-height: 44px;
+        font-size: 18px;
+    }
+    
+    .play-pause {
+        min-width: 50px;
+        min-height: 50px;
+        font-size: 20px;
+    }
+    
+    .progress-container {
+        height: 6px;
+    }
+    
+    .time-display {
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+    
+    .drag-handle {
+        height: 40px;
+    }
+}
+
+/* Prevenir zoom en Android */
+@media screen and (max-width: 768px) {
+    input, select, textarea {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-player {
+        width: 95vw;
+        height: 50vh;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .bottom-controls {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .progress-container {
+        order: -1;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.floating-player {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Estilos para PWA */
+@media (display-mode: standalone) {
+    body {
+        background: #000;
+    }
+    
+    .floating-player {
+        box-shadow: none;
+        border: none;
+    }
+}
+
+/* Ocultar scrollbars */
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

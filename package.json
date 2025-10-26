@@ -1,0 +1,35 @@
+{
+  "name": "floating-video-player",
+  "version": "1.0.0",
+  "description": "Reproductor de video flotante que se superpone sobre otras aplicaciones",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 8080 -c-1",
+    "dev": "http-server -p 8080 -c-1 -o",
+    "build": "echo 'No build step needed for static files'",
+    "deploy": "gh-pages -d ."
+  },
+  "keywords": [
+    "video",
+    "player",
+    "floating",
+    "pwa",
+    "web-app",
+    "mobile",
+    "desktop"
+  ],
+  "author": "Tu Nombre",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "gh-pages": "^6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tu-usuario/floating-video-player.git"
+  },
+  "homepage": "https://tu-usuario.github.io/floating-video-player",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

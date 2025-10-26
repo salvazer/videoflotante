@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor Video Flotante</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+    <div id="floating-player" class="floating-player">
+        <div class="video-container">
+            <video id="videoPlayer" controls preload="metadata" loop>
+                <source src="media/vivo.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video>
+        </div>
+        <div class="controls-overlay">
+            <div class="top-controls">
+                <button id="minimizeBtn" class="control-btn" title="Minimizar">−</button>
+                <button id="closeBtn" class="control-btn" title="Cerrar">×</button>
+            </div>
+            <div class="bottom-controls">
+                <button id="playPauseBtn" class="control-btn play-pause">▶</button>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div id="progress" class="progress"></div>
+                    </div>
+                </div>
+                <div class="time-display">
+                    <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                </div>
+                <button id="fullscreenBtn" class="control-btn" title="Pantalla completa">⛶</button>
+            </div>
+        </div>
+        <div id="drag-handle" class="drag-handle"></div>
+    </div>
+
+    <div id="minimized-player" class="minimized-player">
+        <button id="restoreBtn" class="restore-btn">▶</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

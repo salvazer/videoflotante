@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generador de Iconos Simples</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        canvas { border: 1px solid #ccc; margin: 10px; }
+        .icon-container { display: inline-block; margin: 10px; text-align: center; }
+        button { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>Generador de Iconos PWA</h1>
+    <p>Haz clic en "Generar Iconos" y luego descarga cada uno haciendo clic derecho → "Guardar imagen como..."</p>
+    
+    <button onclick="generateAllIcons()">Generar Todos los Iconos</button>
+    
+    <div id="icons"></div>
+
+    <script>
+        function createIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Fondo negro
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, size, size);
+            
+            // Círculo de fondo
+            ctx.fillStyle = '#333333';
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2 - 10, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Triángulo de play
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            const triangleSize = size * 0.3;
+            const centerX = size/2;
+            const centerY = size/2;
+            ctx.moveTo(centerX - triangleSize/2, centerY - triangleSize/2);
+            ctx.lineTo(centerX + triangleSize/2, centerY);
+            ctx.lineTo(centerX - triangleSize/2, centerY + triangleSize/2);
+            ctx.closePath();
+            ctx.fill();
+            
+            return canvas;
+        }
+        
+        function generateAllIcons() {
+            const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+            const container = document.getElementById('icons');
+            container.innerHTML = '';
+            
+            sizes.forEach(size => {
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'icon-container';
+                
+                const canvas = createIcon(size);
+                canvas.style.width = '100px';
+                canvas.style.height = '100px';
+                
+                const label = document.createElement('div');
+                label.textContent = `${size}x${size}`;
+                
+                iconDiv.appendChild(canvas);
+                iconDiv.appendChild(label);
+                container.appendChild(iconDiv);
+                
+                // Hacer el canvas descargable
+                canvas.addEventListener('click', () => {
+                    const link = document.createElement('a');
+                    link.download = `icon-${size}x${size}.png`;
+                    link.href = canvas.toDataURL();
+                    link.click();
+                });
+                
+                canvas.style.cursor = 'pointer';
+                canvas.title = 'Click para descargar';
+            });
+        }
+    </script>
+</body>
+</html>

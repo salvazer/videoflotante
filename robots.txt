@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://tu-usuario.github.io/floating-video-player/sitemap.xml
+
+# Archivos específicos
+Allow: /media/
+Allow: /icons/
+Allow: /screenshots/
+
+# Archivos de configuración
+Disallow: /.github/
+Disallow: /node_modules/
+Disallow: /*.json
+Disallow: /*.yml
+Disallow: /*.yaml
+Disallow: /sw.js
+Disallow: /create-icons.html
